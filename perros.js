@@ -4,7 +4,9 @@ const randomDogBtn = document.querySelector('#btn-random-dog')
 const listDogsBtn = document.querySelector('#btn-list-dogs')
 const container = document.querySelector('main')
 const select = document.querySelector('select')
-const baseURL = 'https://dog.ceo/api/breeds'
+
+// URL BASE
+const baseURL = 'https://dog.ceo/api'
 
 // CONFIGURACIÓN EVENTOS
 
@@ -20,7 +22,14 @@ function renderDogsImagesByBreed(breed) {
 	// ---------------AQUI TU CODIGO --------
 	// OBTENGA IMAGENES DE ESA RAZA
 
-	console.log(breed)
+	const endpoint = baseURL + `/breed/${breed}/images`
+	fetch(endpoint)
+		.then((res) => res.json())
+		.then(({ message: dogImagesURL }) => {
+			console.log(dogImagesURL)
+			resetContainer()
+			appendImages(dogImagesURL)
+		})
 }
 
 // FUNCION MANEJADORA PARA EL EVENTO DEL BOTON QUE LISTA POR RAZAS
@@ -32,7 +41,7 @@ function handleGetDogsByBreed() {
 // FUNCION MANEJADORA PARA EL EVENTO DEL BOTON QUE OBIENE PERRO ALEATORIO
 
 function handleGetRandomDog() {
-	const endpoint = baseURL + '/image/random'
+	const endpoint = baseURL + '/breeds/image/random'
 	fetch(endpoint)
 		.then((res) => res.json())
 		.then(({ message: dogImageURL }) => {
@@ -46,7 +55,7 @@ function handleGetRandomDog() {
 // FUNCION QUE HIDRATA AL CARGAR EL SITE EL SELECT CON RAZAS DE PERROS
 
 function loadBreeds() {
-	const endpoint = baseURL + '/list/all'
+	const endpoint = baseURL + '/breeds/list/all'
 
 	fetch(endpoint)
 		.then((res) => res.json())
