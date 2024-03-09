@@ -1,3 +1,6 @@
+// Crear un botton PERRO ALEATORIO que obtenga una imagen random de un perro
+// al hacer click y cree el elemento en pantalla
+
 getAllBreeds()
 
 function getAllBreeds() {
