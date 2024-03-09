@@ -1,10 +1,40 @@
-// Crear un botton PERRO ALEATORIO que obtenga una imagen random de un perro
-// al hacer click y cree el elemento en pantalla
+const randomDogBtn = document.querySelector('#btn-random-dog')
+const listDogsBtn = document.querySelector('#btn-list-dogs')
+const container = document.querySelector('main')
+const select = document.querySelector('select')
+const baseURL = 'https://dog.ceo/api/breeds'
 
-getAllBreeds()
+randomDogBtn.addEventListener('click', handleGetRandomDog)
+listDogsBtn.addEventListener('click', handleGetDogsByBreed)
 
-function getAllBreeds() {
-	const endpoint = 'https://dog.ceo/api/breeds/list/all'
+loadBreeds()
+
+function renderDogsImagesByBreed(breed) {
+	// AQUI TU CODIGO
+	// OBTENGA IMAGENES DE ESA RAZA
+
+	console.log(breed)
+}
+
+function handleGetDogsByBreed() {
+	renderDogsImagesByBreed(select.value)
+}
+
+function handleGetRandomDog() {
+	const endpoint = baseURL + '/image/random'
+	fetch(endpoint)
+		.then((res) => res.json())
+		.then(({ message: dogImageURL }) => {
+			if (!dogImageURL) return console.warn('cerveza sin imagen')
+
+			resetContainer()
+			appendImage(dogImageURL)
+		})
+}
+
+function loadBreeds() {
+	const endpoint = baseURL + '/list/all'
+
 	fetch(endpoint)
 		.then((res) => res.json())
 		.then((data) => {
@@ -12,6 +42,26 @@ function getAllBreeds() {
 
 			for (const breed in data.message) breeds.push(breed)
 
-			console.log(breeds)
+			breeds.forEach((breed) => {
+				const option = document.createElement('option')
+				option.textContent = breed
+				option.value = breed
+				select.appendChild(option)
+			})
 		})
+}
+
+function resetContainer() {
+	container.innerHTML = ''
+}
+
+function appendImage(url) {
+	const img = document.createElement('img')
+	img.src = url
+
+	container.appendChild(img)
+}
+
+function appendImages(urls) {
+	urls.forEach((url) => appendImage(url))
 }
