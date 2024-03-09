@@ -1,3 +1,40 @@
-body {
-	/* background-color: red; */
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+header {
+	padding: 2rem;
+	border-bottom: 1px dashed #444;
+	margin-bottom: 1rem;
+}
+
+header button {
+	padding: 0.5rem 1rem;
+	background: none;
+	border: 0;
+	background-color: dodgerblue;
+	color: gold;
+	font-weight: bold;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 6px;
+}
+header button:hover {
+	background-color: rgb(61, 155, 249);
+}
+
+main {
+	text-align: center;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	object-fit: contain;
+	background-color: #f1f1f1;
+	border-radius: 6px;
+	border: 1px solid #e1e1e1;
+	padding: 1rem;
 }

@@ -1,15 +1,36 @@
+const randomBeerBtn = document.querySelector('#btn-random-beer')
+
+const container = document.querySelector('main')
+
+const baseURL = 'https://api.punkapi.com/v2/beers'
+
+randomBeerBtn.addEventListener('click', handleGetRandomBeer)
+
 getIngredients()
 
-// declara la función getIngredients que consulte a la api una cerveza e imprima por consola un array de strings con cada uno de sus tipos de ingredientes
-
-function getIngredients() {
-	const endpoint = 'https://api.punkapi.com/v2/beers/1'
+function handleGetRandomBeer() {
+	const endpoint = baseURL + '/random'
 	fetch(endpoint)
 		.then((res) => res.json())
-		.then((data) => {
+		.then(([beer]) => {
+			if (!beer.image_url) return console.warn('cerveza sin imagen')
+
+			const img = document.createElement('img')
+			img.src = beer.image_url
+
+			container.innerHTML = ''
+			container.appendChild(img)
+		})
+}
+
+function getIngredients() {
+	const endpoint = baseURL + '/1'
+	fetch(endpoint)
+		.then((res) => res.json())
+		.then(([beer]) => {
 			const ingredients = []
 
-			for (const ingredient in data[0].ingredients)
+			for (const ingredient in beer.ingredients)
 				ingredients.push(ingredient)
 
 			console.log(ingredients)
